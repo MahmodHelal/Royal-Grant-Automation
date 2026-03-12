@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Grants E2E Automation Suite — نظام المنح الملكية" verbose="1">
+
+    <test name="E2E Workflow — Steps 1→2→3">
+        <classes>
+            <class name="runners.E2ETestRunner"/>
+        </classes>
+    </test>
+
+<!--    <test name="Enterprise Role-Based Tests">-->
+<!--        <classes>-->
+<!--            <class name="runners.CucumberTestRunner"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+
+</suite>

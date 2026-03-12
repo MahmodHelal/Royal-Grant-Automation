@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss} [%thread] %-5level %logger{36} — %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Suppress noisy third-party logs -->
+    <logger name="org.openqa.selenium" level="WARN"/>
+    <logger name="io.netty"            level="WARN"/>
+    <logger name="io.github.bonigarcia" level="WARN"/>
+
+    <!-- Framework logs at INFO -->
+    <logger name="core"  level="INFO"/>
+    <logger name="hooks" level="INFO"/>
+    <logger name="utils" level="INFO"/>
+    <logger name="pages" level="INFO"/>
+
+    <root level="WARN">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>
