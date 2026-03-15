@@ -316,7 +316,7 @@ public class E2EGrantsWorkflowSteps {
         if (data.containsKey("operationDate"))       tab.selectOperationDate(data.get("operationDate"));
         if (data.containsKey("sequenceNo"))          tab.fillSequenceNo(data.get("sequenceNo"));
         if (data.containsKey("sequenceDate"))        tab.selectSequenceDate(data.get("sequenceDate"));
-        if (data.containsKey("grantType"))           tab.selectGrantType(data.get("grantType"));
+        if (data.containsKey("grantType"))           tab.selectGrantTypeIfRequired();
 
         System.out.println("[STEP] File opening data tab filled.");
     }
@@ -377,7 +377,7 @@ public class E2EGrantsWorkflowSteps {
 
         try {
             return java.nio.file.Files.readString(
-                    java.nio.file.Path.of("target/transaction_number.txt")
+                    java.nio.file.Path.of("target/transaction_numbers.txt")
             ).trim();
         } catch (Exception e) {
             System.out.println("[WARN] Could not read transaction number from file.");

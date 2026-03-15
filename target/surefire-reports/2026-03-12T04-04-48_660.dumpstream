@@ -1,0 +1,5 @@
+# Created at 2026-03-12T04:04:48.870
+Boot Manifest-JAR contains absolute paths in classpath 'D:\Eastern Automation Scripts\GrantRoyal_fixed_clean\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Grants E2E Automation Suite — نظام المنح الملكية]" guice-stage="DEVELOPMENT" verbose="0">
+  <test thread-count="5" name="E2E Workflow — Steps 1→2→3(failed)" verbose="0">
+    <classes>
+      <class name="runners.E2ETestRunner">
+        <methods>
+          <include name="setUpClass"/>
+          <include name="tearDownClass"/>
+          <include name="runScenario" invocation-numbers="2 3 12 13 19 147 20 148 21 149 22 150 23 151 24 152 25 153 26 154 27 155 28 156 29 157 30 158 31 159 32 160 33 161 34 162 35 163 36 164 37 165 38 166 39 167 40 41 49 52 53 56 57 58 59 60 62 69 76 83 92 99 107 110 114 115 116 117 118 121 122 123 124 125"/>
+        </methods>
+      </class> <!-- runners.E2ETestRunner -->
+    </classes>
+  </test> <!-- E2E Workflow — Steps 1→2→3(failed) -->
+</suite> <!-- Failed suite [Grants E2E Automation Suite — نظام المنح الملكية] -->

@@ -300,7 +300,7 @@ public class LocalGrantsAppPage {
         new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.elementToBeClickable(viewBtn)).click();
 
-        log.info("Clicked عرض on transaction at index {} (TX-{:02d})", index, index + 1);
+        log.info("Clicked عرض on transaction at index {} (TX-{})", index, index + 1);
     }
 
 

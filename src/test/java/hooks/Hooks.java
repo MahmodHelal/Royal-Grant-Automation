@@ -16,6 +16,11 @@ public class Hooks {
 
     private static final Logger log = LoggerFactory.getLogger(Hooks.class);
 
+    // Clear the transaction file at the start of each feature file's first @Step1 scenario.
+    // Tracking by feature URI ensures each feature gets a fresh file when running all features
+    // together in one Maven run, preventing stale transaction indices from previous features.
+    private static String lastStep1FeatureUri = null;
+
     private final TestContext ctx;
 
     public Hooks(TestContext ctx) {
@@ -24,13 +29,16 @@ public class Hooks {
 
     @Before(order = 0)
     public void setUp(Scenario scenario) {
-        // ✅ امسح الملف بس في أول scenario (Step1)
-        if (scenario.getSourceTagNames().contains("@Step1")) {
+        // Clear the file whenever a new feature file's @Step1 scenario starts
+        String currentUri = scenario.getUri().toString();
+        if (scenario.getSourceTagNames().contains("@Step1")
+                && !currentUri.equals(lastStep1FeatureUri)) {
             try {
                 java.nio.file.Files.deleteIfExists(
                         java.nio.file.Path.of("target/transaction_numbers.txt")
                 );
-                log.info("Cleared transaction_numbers.txt for new run.");
+                log.info("Cleared transaction_numbers.txt for feature: {}", currentUri);
+                lastStep1FeatureUri = currentUri;
             } catch (Exception ignored) {}
         }
 

@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd 'D:\\\\Eastern Automation Scripts\\\\GrantRoyal_fixed_clean' && mvn test -Dcucumber.filter.tags=\"@E2E\" 2>&1)"
+    ]
+  }
+}

@@ -232,8 +232,9 @@ public class OwnerDataPage {
         WebElement postalInput = driver.findElement(By.name("deliverd_post"));
         postalInput.clear();
         postalInput.sendKeys(postalCode);
-        driver.findElement(By.id("file"))
-                .sendKeys("D:\\المنح الملكية\\FIRSTWORKFLOW USERS.jpg");
+        String idImagePath = System.getProperty("id.image.path",
+                "D:\\المنح الملكية\\FIRSTWORKFLOW USERS.jpg");
+        driver.findElement(By.id("file")).sendKeys(idImagePath);
         Thread.sleep(1500);
 
         System.out.println("[INFO] Owner data filled successfully.");
@@ -401,7 +402,9 @@ public class OwnerDataPage {
         WebElement fileEl = driver.findElement(fileInput);
         ((JavascriptExecutor) driver).executeScript(
                 "arguments[0].style.display='block';", fileEl);
-        fileEl.sendKeys("D:\\المنح الملكية\\FIRSTWORKFLOW USERS.jpg");
+        String idImagePath = System.getProperty("id.image.path",
+                "D:\\المنح الملكية\\FIRSTWORKFLOW USERS.jpg");
+        fileEl.sendKeys(idImagePath);
 
         Thread.sleep(1000); // انتظر رفع الملف
         System.out.println("[INFO] ID image uploaded.");

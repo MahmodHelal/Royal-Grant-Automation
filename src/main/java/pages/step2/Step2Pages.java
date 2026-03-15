@@ -153,35 +153,68 @@ public class Step2Pages {
         }
 
         // ─── Grant type dropdown (نوع المنحة الملكية) ─────────────────────────
-        public void selectGrantType(String optionText) {
+        /**
+         * Checks whether the grant type dropdown needs manual selection.
+         * - Most grant areas: field is disabled (auto-filled by system) → skip
+         * - مساحة ٢٠ × ٢٠: field is enabled → select manually
+         */
+        public void selectGrantTypeIfRequired() {
+            // When disabled: rendered as <input disabled name="grants_royal_area_classes.grant_type">
+            //                — no addTranDiv wrapper exists at all
+            // When enabled:  rendered as addTranDiv > ant-select-enabled > ant-select-selection--single
+            boolean isEnabled = !driver.findElements(
+                    By.xpath("//div[contains(@class,'addTranDiv')]//div[contains(@class,'ant-select-enabled')]")
+            ).isEmpty();
+
+            if (!isEnabled) {
+                System.out.println("[INFO] Grant type is auto-filled (disabled input) — skipping.");
+                return;
+            }
+
+            // Read the grant area to determine the correct value to select
+            String area = "";
+            try {
+                area = driver.findElement(
+                        By.xpath("//input[@name='file_opening_data.royal_grant_area']"))
+                        .getAttribute("value").trim();
+                System.out.println("[INFO] Grant area detected: " + area);
+            } catch (Exception e) {
+                System.out.println("[WARN] Could not read grant area field: " + e.getMessage());
+            }
+
+            String grantType = "مساحة ٢٠ × ٢٠".equals(area) ? "منح وزارة الدفاع" : "منح ملكية";
+            System.out.println("[INFO] Grant type dropdown is enabled — selecting: " + grantType);
+            selectGrantType(grantType);
+        }
+
+        private void selectGrantType(String optionText) {
             By dropdownLocator = By.xpath(
-                    "//div[contains(@class,'addTranDiv')]" +
-                            "//div[contains(@class,'ant-select-selection--single')]"
-            );
+                    "//div[contains(@class,'addTranDiv')]//div[contains(@class,'ant-select-selection--single')]");
 
             WebElement dropdown = wait.until(ExpectedConditions.presenceOfElementLocated(dropdownLocator));
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", dropdown);
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dropdown);
 
-            // Wait for dropdown to be visible (not hidden)
             By menuLocator = By.cssSelector(
-                    ".ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-dropdown-menu"
-            );
+                    ".ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-dropdown-menu");
             wait.until(ExpectedConditions.visibilityOfElementLocated(menuLocator));
 
-            // Find and click the option — skip disabled first item
             By optionLocator = By.xpath(
                     "//div[contains(@class,'ant-select-dropdown') and not(contains(@class,'ant-select-dropdown-hidden'))]" +
                             "//li[contains(@class,'ant-select-dropdown-menu-item')" +
                             " and not(contains(@class,'ant-select-dropdown-menu-item-disabled'))" +
-                            " and normalize-space(text())='" + optionText + "']"
-            );
+                            " and normalize-space(text())='" + optionText + "']");
 
             WebElement option = wait.until(ExpectedConditions.visibilityOfElementLocated(optionLocator));
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", option);
             System.out.println("[INFO] Selected نوع المنحة الملكية: " + optionText);
         }        // ─── Navigation ───────────────────────────────────────────────────────
         public void clickNext() {
+            // Close any open date picker popup before clicking next
+            try {
+                driver.findElement(By.tagName("body")).click();
+                Thread.sleep(300);
+            } catch (Exception ignored) {}
             WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(nextBtn));
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", btn);
             btn.click();

@@ -22,8 +22,10 @@ public class GrantsPortalPage {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    // Base URL for localhost app
-    private static final String LOCALHOST_BASE = "http://localhost:8080/#/submissions/grantroyal?tk=";
+    // Base URL for localhost app — reads from framework.properties (baseLocalUrl) or uses default
+    private static final String LOCALHOST_BASE =
+            System.getProperty("baseLocalUrl",
+                    "http://localhost:8080/#/submissions/grantroyal") + "?tk=";
 
     public GrantsPortalPage(WebDriver driver) {
         this.driver = driver;
